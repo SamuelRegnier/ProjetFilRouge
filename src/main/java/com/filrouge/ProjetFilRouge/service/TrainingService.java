@@ -1,5 +1,6 @@
 package com.filrouge.ProjetFilRouge.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.filrouge.ProjetFilRouge.entity.Training;
@@ -10,5 +11,6 @@ public interface TrainingService {
 	public List<Training> getAll();
 	public void delete(Training training);
 	public void update(Training training);
+	public Boolean newSessionTooEarly(Training training, Date date);
 
 }

@@ -142,4 +142,17 @@ public class TrainingDaoImpl implements TrainingDao {
 
 	}
 
+
+	@Override
+	public void allStartDatesforTraining(Training training) {
+		try {
+			String query = "SELECT date_debut FROM session JOIN training on training.id = session.id_training"
+					+ " WHERE training.id = ?";
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setInt(1, training.getId());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

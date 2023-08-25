@@ -45,5 +45,10 @@ public class UserServiceImpl implements UserService{
 	public List<User> getAll() {
 		return userDao.getAll();
 	}
+	
+	@Override
+	public Boolean isMailAlreadyInDatabase(String mail) {
+		return userDao.getAllMails().contains(mail);
+	}
 
 }

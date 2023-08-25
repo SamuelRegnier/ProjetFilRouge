@@ -11,4 +11,5 @@ public interface TrainingDao {
 	public Training get(int id);
 	public void update(Training training);
 	public void delete(Training training);
+	public void allStartDatesforTraining(Training training);
 }

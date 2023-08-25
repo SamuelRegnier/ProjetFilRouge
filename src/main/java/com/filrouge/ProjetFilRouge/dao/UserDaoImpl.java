@@ -135,4 +135,25 @@ public class UserDaoImpl implements UserDao {
 		}	
 	}
 	
+	@Override
+	public List<String> getAllMails() {
+		List<String> users = new ArrayList<>();
+		try {
+			Statement stm = connection.createStatement();
+			String query = "SELECT mail FROM user";
+			
+			ResultSet result = stm.executeQuery(query);
+			
+			while(result.next()) {
+				String mail = result.getString("mail");
+				users.add(mail);
+			}
+			
+			stm.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+	
 }

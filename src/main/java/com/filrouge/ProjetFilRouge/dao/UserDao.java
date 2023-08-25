@@ -10,4 +10,5 @@ public interface UserDao {
 	public List<User> getAll();
 	public void update(User use);
 	public void delete(User use);
+	public List<String> getAllMails();
 }

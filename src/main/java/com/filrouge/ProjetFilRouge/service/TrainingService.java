@@ -12,4 +12,5 @@ public interface TrainingService {
 	public void delete(Training training);
 	public void update(Training training);
 	public Boolean newSessionTooEarly(Training training, Date date);
+	
 }

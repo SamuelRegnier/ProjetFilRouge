@@ -51,5 +51,4 @@ public class UserServiceImpl implements UserService{
 		return userDao.getAllMails().contains(mail);
 	}
 
-
 }

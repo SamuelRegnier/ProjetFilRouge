@@ -156,3 +156,4 @@ public class TrainingDaoImpl implements TrainingDao {
 		}
 	}
 }
+ 

@@ -13,4 +13,3 @@ public interface TrainingDao {
 	public void delete(Training training);
 	public void allStartDatesforTraining(Training training);
 }
- 

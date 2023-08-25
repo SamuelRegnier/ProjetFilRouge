@@ -55,5 +55,5 @@ public class TrainingServiceImpl implements TrainingService {
 			return ((Math.abs(startDates.getTime() - date.getTime())) < 2419200000L);
 		} 
 		return true;
-	}
+	} 
 }

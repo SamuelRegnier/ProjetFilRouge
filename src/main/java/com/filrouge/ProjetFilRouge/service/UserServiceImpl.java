@@ -50,5 +50,5 @@ public class UserServiceImpl implements UserService{
 	public Boolean isMailAlreadyInDatabase(String mail) {
 		return userDao.getAllMails().contains(mail);
 	}
-
+ 
 }

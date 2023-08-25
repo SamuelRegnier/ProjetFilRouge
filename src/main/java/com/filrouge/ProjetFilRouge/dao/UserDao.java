@@ -12,3 +12,4 @@ public interface UserDao {
 	public void delete(User use);
 	public List<String> getAllMails();
 }
+ 

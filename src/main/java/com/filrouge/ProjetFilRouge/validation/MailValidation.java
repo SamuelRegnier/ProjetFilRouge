@@ -57,6 +57,6 @@ public class MailValidation {
 	@Override
 	public Boolean isMailAlreadyInDatabase(mail) {
 		return userDao.getAllMails().contains(mail);
-	}
+	} 
 	 */
 }

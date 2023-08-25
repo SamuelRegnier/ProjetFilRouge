@@ -25,7 +25,6 @@ public class MailValidation {
 		}
 		return erreurs;
 	}
-
 	
 	/*
 	 * UserDao :

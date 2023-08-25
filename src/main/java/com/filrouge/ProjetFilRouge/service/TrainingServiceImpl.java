@@ -56,4 +56,5 @@ public class TrainingServiceImpl implements TrainingService {
 		} 
 		return true;
 	}
+	
 }

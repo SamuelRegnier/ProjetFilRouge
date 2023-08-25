@@ -50,7 +50,7 @@ public class TrainingServiceImpl implements TrainingService {
 	
 	@Override
 	public Boolean newSessionTooEarly(Training training, Date date) {
-		List<Date> listStartDates = new ArrayList<>();
+		List<Date> listStartDates = trainingDao.allStartDatesforTraining(training);
 		for (Date startDates : listStartDates) {
 			return ((Math.abs(startDates.getTime() - date.getTime())) < 2419200000L);
 		} 

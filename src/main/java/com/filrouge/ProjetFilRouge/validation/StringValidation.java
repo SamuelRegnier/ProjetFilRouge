@@ -21,5 +21,20 @@ public class StringValidation {
 		}
 		return erreurs;
 	}
+	
+	public static List<String> erreurPrenom(String prenom){
+		List<String> erreurs = new ArrayList<>();
+		if (prenom == null) {
+			erreurs.add("Le prénom ne peut pas être null.");
+			return erreurs;
+		}
+		if (!prenom.matches("[a-zA-Z][a-zA-Z](-){2}[A-Za-z]")) {
+			erreurs.add("Le prénom ne doit comporter que des lettres.");
+		}
+		if (prenom.length()<3 || prenom.length()>15) {
+			erreurs.add("Le prénom doit comporter minimum 3 charactères et maximum 15 charactères");
+		}
+		return erreurs;
+	}
 
 }

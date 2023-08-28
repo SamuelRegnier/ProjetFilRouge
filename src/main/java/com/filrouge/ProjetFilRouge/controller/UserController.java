@@ -2,7 +2,10 @@ package com.filrouge.ProjetFilRouge.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.filrouge.ProjetFilRouge.entity.User;
+import com.filrouge.ProjetFilRouge.erreur.ErreurResponse;
+import com.filrouge.ProjetFilRouge.exception.NotFoundException;
+import com.filrouge.ProjetFilRouge.exception.StringException;
 import com.filrouge.ProjetFilRouge.service.UserService;
 import com.filrouge.ProjetFilRouge.validation.StringValidation;
 
@@ -37,11 +43,12 @@ public class UserController {
 	}
 	
 	@PostMapping(value = "/users")
-	public List<String> add(@RequestBody User user) {
+	public User add(@RequestBody User user) {
 		user.setId(null);
 		List<String> erreurs = StringValidation.erreurNom(user.getNom());
-		if (erreurs != null) {
-			return erreurs;
+		erreurs.addAll(StringValidation.erreurPrenom(user.getPrenom()));
+		if (!erreurs.isEmpty()) {
+			throw new StringException(erreurs);
 		}
 		userService.add(user);
 		return user;
@@ -61,6 +68,15 @@ public class UserController {
 	public User update(@RequestBody User user) {
 		userService.update(user);
 		return user;
+	}
+	
+	@ExceptionHandler
+	public ResponseEntity<ErreurResponse> handleException(StringException e) {
+	ErreurResponse error = new ErreurResponse();
+	error.setStatus(HttpStatus.NOT_FOUND.value());
+	error.setMessage(e.getMessage());
+	error.setTimeStamp(System.currentTimeMillis());
+	return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
 
 }

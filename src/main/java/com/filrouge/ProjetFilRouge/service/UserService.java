@@ -10,4 +10,5 @@ public interface UserService {
 	public void update(User use);
 	public User get(int id);
 	public List<User> getAll();
+	public Boolean isMailAlreadyInDatabase(String mail); 
 }

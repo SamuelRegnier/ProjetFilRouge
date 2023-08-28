@@ -1,5 +1,6 @@
 package com.filrouge.ProjetFilRouge.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.filrouge.ProjetFilRouge.entity.Training;
@@ -11,4 +12,5 @@ public interface TrainingDao {
 	public Training get(int id);
 	public void update(Training training);
 	public void delete(Training training);
+	public List<Date> allStartDatesforTraining(Training training);
 }

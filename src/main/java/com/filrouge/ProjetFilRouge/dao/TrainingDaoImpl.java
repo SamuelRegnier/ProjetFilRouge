@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.filrouge.ProjetFilRouge.entity.Training;
@@ -142,4 +143,25 @@ public class TrainingDaoImpl implements TrainingDao {
 
 	}
 
+
+	@Override
+	public List<Date> allStartDatesforTraining(Training training) {
+		List<Date> listDate = new ArrayList<>();
+		try {
+			String query = "SELECT date_debut FROM session JOIN training on training.id = session.id_training"
+					+ " WHERE training.id = ?";
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setInt(1, training.getId());
+			
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				listDate.add(rs.getDate("date_debut"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listDate;
+	}
 }
+ 

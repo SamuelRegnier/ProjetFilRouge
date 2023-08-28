@@ -1,6 +1,7 @@
 package com.filrouge.ProjetFilRouge.service;
 
 import java.sql.Connection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -45,5 +46,15 @@ public class TrainingServiceImpl implements TrainingService {
 	public void update(Training training) {
 		trainingDao.update(training);	
 	}
-
+	
+	@Override
+	public Boolean newSessionTooEarly(Training training, Date date) {
+		List<Date> listStartDates = trainingDao.allStartDatesforTraining(training);
+		for (Date startDates : listStartDates) {
+			if ((Math.abs(startDates.getTime() - date.getTime())) < 2419200000L) {
+				return false;
+			}
+		} 
+		return true;
+	} 
 }

@@ -16,6 +16,10 @@ public class MailValidation {
 			erreurs.add("Date is null");
 			return erreurs;
 		}
+		if (!(mail instanceof String)) {
+			erreurs.add("Not string");
+			return erreurs;
+		}
 		Matcher matcher = pattern.matcher((String) mail);
 		if (!matcher.find()) {
 			erreurs.add("Mail is not valid");

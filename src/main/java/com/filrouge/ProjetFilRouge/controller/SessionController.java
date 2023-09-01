@@ -20,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.http.ResponseEntity;
 
 import com.filrouge.ProjetFilRouge.service.SessionService;
+import com.filrouge.ProjetFilRouge.service.TrainingService;
+import com.filrouge.ProjetFilRouge.validation.DateValidation;
 import com.filrouge.ProjetFilRouge.validation.IntegerValidation;
 import com.filrouge.ProjetFilRouge.entity.Session;
 import com.filrouge.ProjetFilRouge.erreur.ErreurResponse;
@@ -33,11 +35,13 @@ public class SessionController {
 	//on a supprimer Autowired , il est remplacer par le constructeur
 	private SessionService sessionService;
 	private IntegerValidation integerValidation;
+	private TrainingService trainingService; 
 	
 	
-	public SessionController (SessionService sessionService, IntegerValidation integerValidation) {
+	public SessionController (SessionService sessionService, IntegerValidation integerValidation, TrainingService trainingService) {
 		this.sessionService = sessionService;
         this.integerValidation= integerValidation;
+        this.trainingService= trainingService;
 	}
 	
 	@GetMapping("/sessions")
@@ -97,11 +101,15 @@ public class SessionController {
 	
 	@PostMapping(value="/session")
 	public Session addSession (@RequestBody Session session) {
-		List <String> listErreurs = IntegerValidation.ErreurInt(session.getNbParticipant());
+		List <String> listErreurs = IntegerValidation.ErreurInt(session.getNbParticipant());	
+		listErreurs.addAll(DateValidation.isDateDebut(session.getDateDebut(), trainingService, session.getTraining()));
+		listErreurs.addAll(DateValidation.isDateFin(session.getDateDebut(), session.getDateFin()));
+	
 		
 		if (!listErreurs.isEmpty()) {
 			 throw new StringException (listErreurs);
         }
+		
 
         session.setId(null);
         sessionService.add(session);

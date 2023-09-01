@@ -15,7 +15,9 @@ import com.filrouge.ProjetFilRouge.entity.Matter;
 import com.filrouge.ProjetFilRouge.entity.Theme;
 import com.filrouge.ProjetFilRouge.entity.ThemeMatter;
 import com.filrouge.ProjetFilRouge.exception.NotFoundException;
+import com.filrouge.ProjetFilRouge.exception.StringException;
 import com.filrouge.ProjetFilRouge.service.MatterService;
+import com.filrouge.ProjetFilRouge.validation.StringValidation;
 
 @RestController
 @RequestMapping("/api")
@@ -48,6 +50,10 @@ public class MatterController {
 		Theme theme = themematter.getTheme();
 		// On souhaite qu'une matière soit TOUJOURS associée à un thème.
 		matter.setId(null);
+		List<String> erreurs = StringValidation.erreurNom(themematter.getMatter().getNom());
+		if (!erreurs.isEmpty()) {
+			throw new StringException(erreurs);
+		}
 		matterService.add(matter, theme);
 		return matter;
 	}

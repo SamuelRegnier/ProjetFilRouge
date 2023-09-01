@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.filrouge.ProjetFilRouge.entity.Matter;
 import com.filrouge.ProjetFilRouge.entity.Theme;
+import com.filrouge.ProjetFilRouge.exception.StringException;
 import com.filrouge.ProjetFilRouge.service.ThemeService;
+import com.filrouge.ProjetFilRouge.validation.StringValidation;
 
 @RestController
 @RequestMapping("/api")
@@ -43,6 +45,10 @@ public class ThemeController {
 	@PostMapping(value = "/themes")
 	public Theme addTheme(@RequestBody Theme theme) {
 		theme.setId(null);
+		List<String> erreurs = StringValidation.erreurNom(theme.getNom());
+		if (!erreurs.isEmpty()) {
+			throw new StringException(erreurs);
+		}
 		themeService.add(theme);
 		return theme;
 	}

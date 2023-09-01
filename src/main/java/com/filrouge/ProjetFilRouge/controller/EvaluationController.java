@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.filrouge.ProjetFilRouge.entity.Evaluation;
 import com.filrouge.ProjetFilRouge.exception.NotFoundException;
+import com.filrouge.ProjetFilRouge.exception.StringException;
 import com.filrouge.ProjetFilRouge.service.EvaluationService;
+import com.filrouge.ProjetFilRouge.validation.IntegerValidation;
+import com.filrouge.ProjetFilRouge.validation.StringValidation;
 
 @RestController
 @RequestMapping("/api")
@@ -46,6 +49,11 @@ public class EvaluationController {
 	@PostMapping(value=("/evaluations"))
 	public Evaluation add(@RequestBody Evaluation evaluation) {
 		evaluation.setId(null);
+		List<String> erreurs = StringValidation.erreurCommentaire(evaluation.getCommentaires());
+		erreurs.addAll(IntegerValidation.ErreurInt(evaluation.getNote()));
+		if (!erreurs.isEmpty()) {
+			throw new StringException(erreurs);
+		}
 		evaluationService.add(evaluation);
 		return evaluation;
 	}

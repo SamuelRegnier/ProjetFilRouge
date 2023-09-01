@@ -19,6 +19,7 @@ import com.filrouge.ProjetFilRouge.erreur.ErreurResponse;
 import com.filrouge.ProjetFilRouge.exception.NotFoundException;
 import com.filrouge.ProjetFilRouge.exception.StringException;
 import com.filrouge.ProjetFilRouge.service.UserService;
+import com.filrouge.ProjetFilRouge.validation.MailValidation;
 import com.filrouge.ProjetFilRouge.validation.StringValidation;
 
 @RestController
@@ -47,6 +48,9 @@ public class UserController {
 		user.setId(null);
 		List<String> erreurs = StringValidation.erreurNom(user.getNom());
 		erreurs.addAll(StringValidation.erreurPrenom(user.getPrenom()));
+		erreurs.addAll(StringValidation.erreurAdresse(user.getAdresse()));
+		erreurs.addAll(MailValidation.isMailValid(user.getMail(), userService));
+		erreurs.addAll(StringValidation.erreurStatut(user.getStatut()));
 		if (!erreurs.isEmpty()) {
 			throw new StringException(erreurs);
 		}

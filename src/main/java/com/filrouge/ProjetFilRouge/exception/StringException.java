@@ -23,7 +23,7 @@ public class StringException extends RuntimeException {
 	}
 	
 	public static String transformerList(List<String> messages) {
-		String delim = "\n";
+		String delim = "";
 		StringBuilder sb = new StringBuilder();
 		int i=0;
 		while(i<messages.size()-1) {

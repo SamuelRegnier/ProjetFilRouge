@@ -1,24 +1,32 @@
 package com.filrouge.ProjetFilRouge.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.http.ResponseEntity;
 
 import com.filrouge.ProjetFilRouge.service.SessionService;
+import com.filrouge.ProjetFilRouge.service.TrainingService;
+import com.filrouge.ProjetFilRouge.validation.DateValidation;
+import com.filrouge.ProjetFilRouge.validation.IntegerValidation;
 import com.filrouge.ProjetFilRouge.entity.Session;
 import com.filrouge.ProjetFilRouge.erreur.ErreurResponse;
 import com.filrouge.ProjetFilRouge.exception.NotFoundException;
+import com.filrouge.ProjetFilRouge.exception.StringException;
 
 @RestController
 @RequestMapping("/api")
@@ -26,10 +34,14 @@ public class SessionController {
 
 	//on a supprimer Autowired , il est remplacer par le constructeur
 	private SessionService sessionService;
+	private IntegerValidation integerValidation;
+	private TrainingService trainingService; 
 	
 	
-	public SessionController (SessionService sessionService) {
+	public SessionController (SessionService sessionService, IntegerValidation integerValidation, TrainingService trainingService) {
 		this.sessionService = sessionService;
+        this.integerValidation= integerValidation;
+        this.trainingService= trainingService;
 	}
 	
 	@GetMapping("/sessions")
@@ -89,10 +101,29 @@ public class SessionController {
 	
 	@PostMapping(value="/session")
 	public Session addSession (@RequestBody Session session) {
-		session.setId(null); 
-		sessionService.add(session);
+		List <String> listErreurs = IntegerValidation.ErreurInt(session.getNbParticipant());	
+		listErreurs.addAll(DateValidation.isDateDebut(session.getDateDebut(), trainingService, session.getTraining()));
+		listErreurs.addAll(DateValidation.isDateFin(session.getDateDebut(), session.getDateFin()));
+	
+		
+		if (!listErreurs.isEmpty()) {
+			 throw new StringException (listErreurs);
+        }
+        session.setId(null);
+        sessionService.add(session);
 		return session;
+
+	}
+
+	@ExceptionHandler
+	public ResponseEntity<ErreurResponse> handleException(StringException e) {
+	ErreurResponse error = new ErreurResponse();
+	error.setStatus(HttpStatus.NOT_FOUND.value());
+	error.setMessage(e.getMessage());
+	error.setTimeStamp(System.currentTimeMillis());
+	return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
 }
 	
+
 

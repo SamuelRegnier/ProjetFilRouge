@@ -18,20 +18,20 @@ public class DateValidation {
 	public static List<String> isDateDebut(Object date, TrainingService trainingService, Training training) {
 		List<String> erreurs = new ArrayList<String>();
 		if (date == null) {
-			erreurs.add("Date is null");
+			erreurs.add("Date de début de session ne peut pas être null;  ");
 			return erreurs;
 		}
 		if (!(date instanceof Date)) {
-			erreurs.add("Date is not a date");
+			erreurs.add("Date de début est invalide; ");
 			return erreurs;
 		}
 		Date date2 = (Date) date;
 		Date today = new Date();
 		if (date2.before(today)) {
-			erreurs.add("Date is before today");
+			erreurs.add("Date de debut de session invalide, choisir une date de début ultérieur à aujourd'hui;  ");
 		}
 		if (trainingService.newSessionTooEarly(training, (Date) date)) {
-			erreurs.add("Date is invalid for a new session");
+			erreurs.add("Date de debut de la session est très proche de la date de fin de la session précedente; ");
 		}
 		return erreurs;
 	}
@@ -39,20 +39,20 @@ public class DateValidation {
 	public static List<String> isDateFin(Date dateDebut, Object dateFin) {
 		List<String> erreurs = new ArrayList<String>();
 		if (dateFin == null) {
-			erreurs.add("Date is null");
+			erreurs.add("Date de fin de session ne peut pas être null; ");
 			return erreurs;
 		}
 		if (!(dateFin instanceof Date)) {
-			erreurs.add("Date is not a date");
+			erreurs.add("Date de fin de session invalide; ");
 			return erreurs;
 		}
 		Date date2 = (Date) dateFin;
 		Date today = new Date();
 		if (date2.before(today)) {
-			erreurs.add("Date is before today");
+			erreurs.add("Date de fin de session invalide, choisir une date ultérieure à aujourd'hui; ");
 		}
 		if (date2.before(dateDebut)) {
-			erreurs.add("End date is before start date");
+			erreurs.add("Date invalide de fin de session, choisir une date de fin de session après la date de début de session; ");
 		}
 		return erreurs;
 	}
@@ -60,11 +60,11 @@ public class DateValidation {
 	public static List<String> isDateNaissance(Date date) {
 		List<String> erreurs = new ArrayList<String>();
 		if (date == null) {
-			erreurs.add("Date is null");
+			erreurs.add("Date de naissance ne peut pas être null; ");
 			return erreurs;
 		}
 		if (!(date instanceof Date)) {
-			erreurs.add("Date is not a date");
+			erreurs.add("Date de naissance est invalide; ");
 			return erreurs;
 		}
 		Date date2 = (Date) date;
@@ -72,8 +72,10 @@ public class DateValidation {
 		long eighteenYearsBefore = 18L * 365 * 24 * 60 * 60 * 1000;
 		Date eighteen = new Date();
 		eighteen.setTime(today.getTime() - eighteenYearsBefore);
-		if (date2.after(eighteen)) {
-			erreurs.add("User is too young");
+		if (date2.after(today)) {
+			erreurs.add("Vous êtes trop jeune pour exister et donc pour être inscrit.");
+		} else if (date2.after(eighteen)) {
+			erreurs.add("Désolé! Vous êtes trop jeune pour être inscrit dans cette session; ");
 		}
 		return erreurs;
 	}

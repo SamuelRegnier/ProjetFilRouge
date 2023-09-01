@@ -13,7 +13,7 @@ public class StringValidation {
 			erreurs.add("Le nom ne peut pas être null.");
 			return erreurs;
 		}
-		if (!nom.matches("[a-zA-Z][a-zA-Z](-){2}[A-Za-z]")) {
+		if (!nom.matches("^[a-zA-Z]*$")) {
 			erreurs.add("Le nom ne doit comporter que des lettres.");
 		}
 		if (nom.length()<3 || nom.length()>15) {
@@ -28,11 +28,71 @@ public class StringValidation {
 			erreurs.add("Le prénom ne peut pas être null.");
 			return erreurs;
 		}
-		if (!prenom.matches("[a-zA-Z][a-zA-Z](-){2}[A-Za-z]")) {
+		if (!prenom.matches("^[a-zA-Z]*$")) {
 			erreurs.add("Le prénom ne doit comporter que des lettres.");
 		}
 		if (prenom.length()<3 || prenom.length()>15) {
 			erreurs.add("Le prénom doit comporter minimum 3 charactères et maximum 15 charactères");
+		}
+		return erreurs;
+	}
+	
+	public static List<String> erreurAdresse(String adresse){
+		List<String> erreurs = new ArrayList<>();
+		if (adresse == null) {
+			erreurs.add("L'adresse ne peut pas être null.");
+			return erreurs;
+		}
+		/*if (!prenom.matches("^[a-zA-Z]*$")) {
+			erreurs.add("L'adresse ne doit comporter que des lettres.");
+		}*/
+		if (adresse.length()<3 || adresse.length()>30) {
+			erreurs.add("L'adresse doit comporter minimum 3 charactères et maximum 30 charactères");
+		}
+		return erreurs;
+	}
+	
+	public static List<String> erreurStatut(String statut){
+		List<String> erreurs = new ArrayList<>();
+		if (statut == null) {
+			erreurs.add("Le statut ne peut pas être null.");
+			return erreurs;
+		}
+		if (!statut.matches("^[a-zA-Z]*$")) {
+			erreurs.add("Le statut ne doit comporter que des lettres.");
+		}
+		if (statut.length()<3 || statut.length()>15) {
+			erreurs.add("Le statut doit comporter minimum 3 charactères et maximum 15 charactères");
+		}
+		return erreurs;
+	}
+	
+	public static List<String> erreurCommentaire(String commentaire){
+		List<String> erreurs = new ArrayList<>();
+		if (commentaire == null) {
+			erreurs.add("Le commentaire ne peut pas être null.");
+			return erreurs;
+		}
+		/*if (!commentaire.matches("^[a-zA-Z]*$")) {
+			erreurs.add("Le statut ne doit comporter que des lettres.");
+		}*/
+		if (commentaire.length()<3 || commentaire.length()>2000) {
+			erreurs.add("Le commentaire doit comporter minimum 3 charactères et maximum 2000 charactères");
+		}
+		return erreurs;
+	}
+	
+	public static List<String> erreurDescription(String description){
+		List<String> erreurs = new ArrayList<>();
+		if (description == null) {
+			erreurs.add("Le commentaire ne peut pas être null.");
+			return erreurs;
+		}
+		/*if (!commentaire.matches("^[a-zA-Z]*$")) {
+			erreurs.add("Le statut ne doit comporter que des lettres.");
+		}*/
+		if (description.length()<3 || description.length()>2000) {
+			erreurs.add("Le commentaire doit comporter minimum 3 charactères et maximum 2000 charactères");
 		}
 		return erreurs;
 	}

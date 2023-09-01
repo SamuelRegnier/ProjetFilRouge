@@ -14,7 +14,6 @@ public interface ThemeDao {
 	public Theme get(int id);
 	public void delete(Theme theme);
 	public void update (Theme theme);
-	List<Matter> getAllMatters(Theme theme);
-		
+	public List<Matter> getAllMatters(Theme theme);
 }
 

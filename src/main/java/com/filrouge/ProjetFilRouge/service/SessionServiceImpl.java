@@ -25,7 +25,10 @@ public class SessionServiceImpl  implements SessionService{
 	ClassroomDao classroomDao;
 	MatterDao matterDao;
 	
-	
+	//Spring en arriere plan:
+	//SessionServuceImpl (SessionDao sessionDao, TrainingDao trainingDao, ....)
+	//this.sessionDao=sessionDao;
+	//this.trainingDao = trainingDao; 
 	SessionServiceImpl () {
 		Connection connection = ConnectionDatabase.getConnection();
 		sessionDao = new SessionDaoImpl(connection);

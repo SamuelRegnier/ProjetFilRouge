@@ -66,5 +66,35 @@ public class StringValidation {
 		}
 		return erreurs;
 	}
+	
+	public static List<String> erreurCommentaire(String commentaire){
+		List<String> erreurs = new ArrayList<>();
+		if (commentaire == null) {
+			erreurs.add("Le commentaire ne peut pas être null.");
+			return erreurs;
+		}
+		/*if (!commentaire.matches("^[a-zA-Z]*$")) {
+			erreurs.add("Le statut ne doit comporter que des lettres.");
+		}*/
+		if (commentaire.length()<3 || commentaire.length()>2000) {
+			erreurs.add("Le commentaire doit comporter minimum 3 charactères et maximum 2000 charactères");
+		}
+		return erreurs;
+	}
+	
+	public static List<String> erreurDescription(String description){
+		List<String> erreurs = new ArrayList<>();
+		if (description == null) {
+			erreurs.add("Le commentaire ne peut pas être null.");
+			return erreurs;
+		}
+		/*if (!commentaire.matches("^[a-zA-Z]*$")) {
+			erreurs.add("Le statut ne doit comporter que des lettres.");
+		}*/
+		if (description.length()<3 || description.length()>2000) {
+			erreurs.add("Le commentaire doit comporter minimum 3 charactères et maximum 2000 charactères");
+		}
+		return erreurs;
+	}
 
 }

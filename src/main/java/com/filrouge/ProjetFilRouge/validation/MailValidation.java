@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import com.filrouge.ProjetFilRouge.service.UserService;
 public class MailValidation {
 	
-	public static final Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$");
+	public static final Pattern pattern = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$");
 	
 	public static List<String> isMailValid(Object mail, UserService userService) {
 		List<String> erreurs = new ArrayList<String>();

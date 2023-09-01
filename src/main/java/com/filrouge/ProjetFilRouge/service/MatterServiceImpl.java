@@ -25,8 +25,10 @@ public class MatterServiceImpl implements MatterService {
 	
 	@Override
 	public int add(Matter matter, Theme theme) {
+		matterDao.add(matter);
+		matter = matterDao.getByName(matter.getNom());
 		themeMatterDao.add(theme.getId(), matter.getId());
-		return matterDao.add(matter);
+		return 1;
 	}
 
 	@Override

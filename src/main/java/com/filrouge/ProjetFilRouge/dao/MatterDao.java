@@ -15,6 +15,6 @@ public interface MatterDao {
 	public void update (Matter matter);
 	public List<Training> getAllTrainings(Matter matter);
 	public List<Theme> getAllThemes(Matter matter);
-		
+	public Matter getByName(String name);
 }
 

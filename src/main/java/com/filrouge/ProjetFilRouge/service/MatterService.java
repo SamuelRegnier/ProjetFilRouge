@@ -15,6 +15,5 @@ public interface MatterService {
 	public void updateTheme(Matter matter, Theme theme);
 	public void addTheme(Matter matter, Theme theme);
 	public void deleteTheme(Matter matter, Theme theme);
-		
 }
 

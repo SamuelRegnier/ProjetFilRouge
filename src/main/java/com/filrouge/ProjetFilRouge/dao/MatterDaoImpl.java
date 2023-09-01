@@ -197,4 +197,32 @@ public class MatterDaoImpl implements MatterDao {
 
 		return listTheme;
 	}
+
+	@Override
+	public Matter getByName(String name) {
+		
+		Matter matter  = null;
+		Statement statement3; 
+
+		try {
+			String query3 = "SELECT * FROM matter WHERE nom = '" + name + "'"; 
+			
+			statement3 = connection.createStatement();
+			
+			ResultSet result3 = statement3.executeQuery(query3);
+
+			while (result3.next()) {
+				Integer idMatter = result3.getInt("id");
+				String nom = result3.getString("nom");
+
+
+				matter  = (new Matter (idMatter, nom));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return matter;
+	}
+	
+	
 }

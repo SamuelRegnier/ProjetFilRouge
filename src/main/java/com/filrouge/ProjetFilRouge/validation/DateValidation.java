@@ -72,8 +72,10 @@ public class DateValidation {
 		long eighteenYearsBefore = 18L * 365 * 24 * 60 * 60 * 1000;
 		Date eighteen = new Date();
 		eighteen.setTime(today.getTime() - eighteenYearsBefore);
-		if (date2.after(eighteen)) {
-			erreurs.add("Désolé! Vous êtes très jeune pour être inscrit dans cette session; ");
+		if (date2.after(today)) {
+			erreurs.add("Vous êtes trop jeune pour exister et donc pour être inscrit.");
+		} else if (date2.after(eighteen)) {
+			erreurs.add("Désolé! Vous êtes trop jeune pour être inscrit dans cette session; ");
 		}
 		return erreurs;
 	}

@@ -3,6 +3,8 @@ package com.filrouge.ProjetFilRouge.validation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 public class StringValidation {
 	public static final int MIN_LONGUEUR_NOM = 3;
 	public static final int MAX_LONGUEUR_NOM = 15;

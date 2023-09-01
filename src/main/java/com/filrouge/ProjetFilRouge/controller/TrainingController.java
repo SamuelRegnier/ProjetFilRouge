@@ -2,7 +2,10 @@ package com.filrouge.ProjetFilRouge.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.filrouge.ProjetFilRouge.entity.Training;
+import com.filrouge.ProjetFilRouge.erreur.ErreurResponse;
 import com.filrouge.ProjetFilRouge.exception.StringException;
 import com.filrouge.ProjetFilRouge.service.TrainingService;
 import com.filrouge.ProjetFilRouge.validation.IntegerValidation;
@@ -66,5 +70,14 @@ public class TrainingController {
 		}
 		trainingService.delete(trainingService.get(trainingId));
 		return "Formation " + trainingId + " supprimée avec succès.";
+	}
+	
+	@ExceptionHandler
+	public ResponseEntity<ErreurResponse> handleException(StringException e) {
+	ErreurResponse error = new ErreurResponse();
+	error.setStatus(HttpStatus.NOT_FOUND.value());
+	error.setMessage(e.getMessage());
+	error.setTimeStamp(System.currentTimeMillis());
+	return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
 }

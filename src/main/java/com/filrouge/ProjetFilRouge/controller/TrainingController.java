@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.filrouge.ProjetFilRouge.entity.Training;
+import com.filrouge.ProjetFilRouge.exception.StringException;
 import com.filrouge.ProjetFilRouge.service.TrainingService;
+import com.filrouge.ProjetFilRouge.validation.IntegerValidation;
+import com.filrouge.ProjetFilRouge.validation.StringValidation;
 
 @RestController
 @RequestMapping("/api")
@@ -40,6 +43,12 @@ public class TrainingController {
 	@PostMapping(value = "/trainings")
 	public Training add(@RequestBody Training training) {
 		training.setId(null);
+		List<String> erreurs = StringValidation.erreurNom(training.getNom());
+		erreurs.addAll(IntegerValidation.ErreurInt(training.getDuree()));
+		erreurs.addAll(IntegerValidation.ErreurInt(training.getNbParticipants()));
+		if (!erreurs.isEmpty()) {
+			throw new StringException(erreurs);
+		}
 		trainingService.add(training);
 		return training;
 	}

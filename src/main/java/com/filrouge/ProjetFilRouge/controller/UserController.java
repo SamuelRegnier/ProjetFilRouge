@@ -19,8 +19,10 @@ import com.filrouge.ProjetFilRouge.erreur.ErreurResponse;
 import com.filrouge.ProjetFilRouge.exception.NotFoundException;
 import com.filrouge.ProjetFilRouge.exception.StringException;
 import com.filrouge.ProjetFilRouge.service.UserService;
+import com.filrouge.ProjetFilRouge.validation.DateValidation;
 import com.filrouge.ProjetFilRouge.validation.MailValidation;
 import com.filrouge.ProjetFilRouge.validation.StringValidation;
+import com.filrouge.ProjetFilRouge.validation.TelNbrValidation;
 
 @RestController
 @RequestMapping("/api")
@@ -48,8 +50,10 @@ public class UserController {
 		user.setId(null);
 		List<String> erreurs = StringValidation.erreurNom(user.getNom());
 		erreurs.addAll(StringValidation.erreurPrenom(user.getPrenom()));
+		erreurs.addAll(DateValidation.isDateNaissance(user.getDateNaissance()));
 		erreurs.addAll(StringValidation.erreurAdresse(user.getAdresse()));
 		erreurs.addAll(MailValidation.isMailValid(user.getMail(), userService));
+		erreurs.addAll(TelNbrValidation.isTelNbr(user.getTelephone()));
 		erreurs.addAll(StringValidation.erreurStatut(user.getStatut()));
 		if (!erreurs.isEmpty()) {
 			throw new StringException(erreurs);

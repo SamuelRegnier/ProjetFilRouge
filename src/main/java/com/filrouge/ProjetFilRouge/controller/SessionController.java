@@ -109,8 +109,6 @@ public class SessionController {
 		if (!listErreurs.isEmpty()) {
 			 throw new StringException (listErreurs);
         }
-		
-
         session.setId(null);
         sessionService.add(session);
 		return session;

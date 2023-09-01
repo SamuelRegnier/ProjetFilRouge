@@ -155,5 +155,28 @@ public class UserDaoImpl implements UserDao {
 		}
 		return users;
 	}
+
+	@Override
+	public List<String> getAllNumTel() {
+		List<String> numsTel = new ArrayList<>();
+		
+		try {
+			Statement stm = connection.createStatement();
+			String query = "SELECT telephone FROM user";
+			
+			ResultSet result = stm.executeQuery(query);
+			
+			while(result.next()) {
+				String telephone = result.getString("telephone");
+				numsTel.add(telephone);
+			}
+			
+			stm.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return numsTel;
+	}
 	
 }  
